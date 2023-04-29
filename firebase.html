@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>  
+    <button class="btn btn-success" type="submit" id="submit">Refresh table</button>
+    <input id="t6" type="text"></input><button class="btn btn-success" id="mybtn">Search Username</button>
+    
+    
+
+    <div class="forms">
+        <input id="t1" placeholder="First Name" type="text"></input>
+        <input id="t2" placeholder="Last Name" type="text"></input>
+        <input id="t3" placeholder="User Name" type="text"></input>
+        <input id="t4" placeholder="Address" type="text"></input>
+        <input id="t5" placeholder="Pet Name" type="text"></input>
+        <button class="btn btn-success" type="submit" id="update">Update</button>
+    </div>
+    
+    <div class="container d-flex justify-content-center">
+        <div class="row col-sm-10">
+            <table class="table table-dark table-responsive">
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Username</th>
+                <th>Address</th>
+                <th>Pet Name</th>
+                <th>Delete</th>
+                <th>Update</th>             
+            <tbody id="mytable">
+                
+            </tbody>    
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<style>
+    html, body {
+    background-image: url("pets.png");
+}
+
+.forms {
+	display: flex ;
+	flex-direction: column;
+	margin-bottom: 50px;
+    margin-left: 500px;
+    margin-top: 50px;
+	max-width: 300px;
+	align-content: left;
+	padding: 0px;
+	
+}
+#t1,#t2,#t3,#t4,#t5{
+margin-bottom: 5px;
+}
+
+#t6{
+    
+    margin-left: 390px;
+    
+}
+
+.btn{
+    
+    margin-left: 10px;
+    
+}
+</style>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  import { getDatabase, ref, set, get, child, remove, update } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+   
+  // Paste the code from Firebase
+  const firebaseConfig = {
+  apiKey: "AIzaSyBWrxBEH79Qn9YPrx_Z6mefubTpW3SRL2U",
+  authDomain: "medina-crud-6795f.firebaseapp.com",
+  databaseURL: "https://medina-crud-6795f-default-rtdb.firebaseio.com",
+  projectId: "medina-crud-6795f",
+  storageBucket: "medina-crud-6795f.appspot.com",
+  messagingSenderId: "1079740106698",
+  appId: "1:1079740106698:web:7a76db16367cdce9807133"
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+   
+  // Get a reference to the database service
+  const db = getDatabase(app);
+
+
+  
+    $( "#mybtn" ).click(function() {
+        
+        const taskRef = ref(db, "users/"+ $("#t6").val());
+
+        get(taskRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            $("#t1").val(snapshot.val().firstname);
+            $("#t2").val(snapshot.val().lastname);
+            $("#t3").val(snapshot.val().username);
+            $("#t4").val(snapshot.val().address);
+            $("#t5").val(snapshot.val().petname);
+            //console.log(snapshot.val());
+        } else {
+            alert("No data available");
+        }
+        }).catch((error) => {
+            alert(error);
+        });
+
+    });
+
+   
+    $( "#submit" ).click(function() {    
+     // initialise database
+        const db = getDatabase();
+
+        const tasksRef = ref(db, "users");
+
+        get(tasksRef)
+        .then((snapshot) => {
+            //const data = snapshot.val();
+            //console.log(data);
+
+            
+            var content = '';
+            //var x=1;
+            snapshot.forEach(function(data){
+                var val = data.val();
+                content +='<tr>';
+                content += '<td>' + val.firstname + '</td>';
+                content += '<td>' + val.lastname + '</td>';
+                content += '<td>' + val.username + '</td>';
+                content += '<td>' + val.address + '</td>';
+                content += '<td>' + val.petname + '</td>';
+                content += '<td><button id="'+ val.username +'" class="btn btn-success" value="delete">Delete</button></td>';
+                content += '<td><button id="'+ val.username +'" class="btn btn-success" value="update">Update</button></td>';
+                content += '</tr>';
+            });
+
+            
+
+            // Function to change the content of t2
+                function modifyText(event) {
+                    var firstname=event.target.id;
+                    var lastname=event.target.id;
+                    var username=event.target.id;
+                    var address=event.target.id;
+                    var petname=event.target.id;
+                    var ops=event.target.value; 
+                    //var  event.target.value);
+
+                    if (ops=="delete"){
+                        remove(ref(db, 'users/' + username)); 
+                        alert("Record has been removed."); 
+                    }
+
+
+                    
+                    if (ops=="update"){
+                        update(ref(db, 'users/' +username),{
+                            
+                        });
+                        alert('updated');  
+                    }
+                }
+
+                // Add event listener to table
+                const el = document.getElementById("mytable");
+                el.addEventListener("click", modifyText, false);
+                
+            
+            //$('#mytable').append(content);
+            $("#mytable").html(content);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
+        
+    });
+  </script>
