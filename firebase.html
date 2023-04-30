@@ -15,6 +15,9 @@
 </head>
 <body>  
     <button class="btn btn-success" type="submit" id="submit">Refresh table</button>
+    <a href="index.html">
+        <button class="btn btn-success" type="submit" id="submit">Go Back</button>
+    </a>
     <input id="t6" type="text"></input><button class="btn btn-success" id="mybtn">Search Username</button>
     
     
@@ -25,19 +28,18 @@
         <input id="t3" placeholder="User Name" type="text"></input>
         <input id="t4" placeholder="Address" type="text"></input>
         <input id="t5" placeholder="Pet Name" type="text"></input>
-        <button class="btn btn-success" type="submit" id="update">Update</button>
+        
     </div>
     
     <div class="container d-flex justify-content-center">
-        <div class="row col-sm-10">
+        <div class="row col-sm-6">
             <table class="table table-dark table-responsive">
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Username</th>
                 <th>Address</th>
                 <th>Pet Name</th>
-                <th>Delete</th>
-                <th>Update</th>             
+                             
             <tbody id="mytable">
                 
             </tbody>    
@@ -53,6 +55,10 @@
     background-image: url("pets.png");
 }
 
+table{
+ justify-content: center;
+
+}
 .forms {
 	display: flex ;
 	flex-direction: column;
@@ -70,7 +76,7 @@ margin-bottom: 5px;
 
 #t6{
     
-    margin-left: 390px;
+    margin-left: 250px;
     
 }
 
@@ -107,7 +113,7 @@ margin-bottom: 5px;
   
     $( "#mybtn" ).click(function() {
         
-        const taskRef = ref(db, "users/"+ $("#t6").val());
+        const taskRef = ref(db, "pets/"+ $("#t6").val());
 
         get(taskRef).then((snapshot) => {
         if (snapshot.exists()) {
@@ -131,7 +137,7 @@ margin-bottom: 5px;
      // initialise database
         const db = getDatabase();
 
-        const tasksRef = ref(db, "users");
+        const tasksRef = ref(db, "pets");
 
         get(tasksRef)
         .then((snapshot) => {
@@ -149,8 +155,7 @@ margin-bottom: 5px;
                 content += '<td>' + val.username + '</td>';
                 content += '<td>' + val.address + '</td>';
                 content += '<td>' + val.petname + '</td>';
-                content += '<td><button id="'+ val.username +'" class="btn btn-success" value="delete">Delete</button></td>';
-                content += '<td><button id="'+ val.username +'" class="btn btn-success" value="update">Update</button></td>';
+                
                 content += '</tr>';
             });
 
@@ -167,14 +172,14 @@ margin-bottom: 5px;
                     //var  event.target.value);
 
                     if (ops=="delete"){
-                        remove(ref(db, 'users/' + username)); 
+                        remove(ref(db, 'pets/' + username)); 
                         alert("Record has been removed."); 
                     }
 
 
                     
                     if (ops=="update"){
-                        update(ref(db, 'users/' +username),{
+                        update(ref(db, 'pets/' +username),{
                             
                         });
                         alert('updated');  
