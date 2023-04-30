@@ -14,20 +14,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>  
-    <button class="btn btn-success" type="submit" id="submit">Refresh table</button>
+    <button class="btn btn-info" type="submit" id="submit">Refresh table</button>
     <a href="index.html">
         <button class="btn btn-success" type="submit" id="submit">Go Back</button>
     </a>
-    <input id="t6" type="text"></input><button class="btn btn-success" id="mybtn">Search Username</button>
+    <input id="t6" type="text" placeholder="User Name" class="d-flex mx-auto"></input><button class="btn btn-dark d-flex mx-auto" id="mybtn">Search </button>
     
     
 
-    <div class="forms">
-        <input id="t1" placeholder="First Name" type="text"></input>
-        <input id="t2" placeholder="Last Name" type="text"></input>
-        <input id="t3" placeholder="User Name" type="text"></input>
-        <input id="t4" placeholder="Address" type="text"></input>
-        <input id="t5" placeholder="Pet Name" type="text"></input>
+    <div class="forms mx-auto col-10 col-md-8 col-lg-6">
+        <input id="t1" placeholder="First Name" type="text"></input><br>
+        <input id="t2" placeholder="Last Name" type="text"></input><br>
+        <input id="t3" placeholder="User Name" type="text"></input><br>
+        <input id="t4" placeholder="Address" type="text"></input><br>
+        <input id="t5" placeholder="Pet Name" type="text"></input><br>
         
     </div>
     
@@ -53,6 +53,9 @@
 <style>
     html, body {
     background-image: url("pets.png");
+    background-size: 1400px 625px;
+    background-repeat: no-repeat;
+
 }
 
 table{
@@ -62,13 +65,12 @@ table{
 .forms {
 	display: flex ;
 	flex-direction: column;
-	margin-bottom: 50px;
-    margin-left: 500px;
-    margin-top: 50px;
+	margin-bottom: 20px;
+    margin-left: 450px;
+    margin-top: 30px;
 	max-width: 300px;
 	align-content: left;
 	padding: 0px;
-	
 }
 #t1,#t2,#t3,#t4,#t5{
 margin-bottom: 5px;
@@ -76,13 +78,13 @@ margin-bottom: 5px;
 
 #t6{
     
-    margin-left: 250px;
+    margin-bottom: 10px;
     
 }
 
-.btn{
+#btn{
     
-    margin-left: 10px;
+   margin-bottom: 30px;
     
 }
 </style>
