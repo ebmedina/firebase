@@ -1,5 +1,6 @@
 body {
   background-image: url(pets.png);
+  background-size: 1400px 625px;
 }
 .container {
   width: 100px;
@@ -8,10 +9,12 @@ body {
   /* border: 2px solid red; */
   font-family: arial;
   font-size: 16px;
-  background-image: url(pets.png);
+
+  box-shadow: 0 0 10px 6px #7e7373;
+  
   border-radius: 20px;
 }
-h2 {
+h2,h6 {
   text-align: center;
 }
 .container div {
@@ -22,12 +25,20 @@ input {
   padding: 5px;
 }
 button {
-  width: 70px;
+  width: 100px;
   padding: 10px;
   margin: 10px;
   font-size: 16px;
-  background-color: cornflowerblue;
+  background-color: #00b894;
   border: none;
   color: white;
   border-radius: 10px;
+}
+
+#delete{
+  background-color: #d63031;
+}
+
+#display{
+  background-color: #6c5ce7;
 }
